@@ -26,6 +26,8 @@ const loginUser = async (req, res) => {
 };
 
 const registerUser = async (req, res) => {
+    console.log("loginUser");
+
   const { userName, fullName, email, password } = req.body;
   const userExists = await User.findOne({ $or: [{ email }, { userName }] });
   if (userExists) {

@@ -26,7 +26,7 @@ const App = () => (
   <div className="App">
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Parking />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/lend" element={<RentForm />} />
@@ -40,8 +40,6 @@ const App = () => (
         <Route path ='/slotexit' element={<SlotExit />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/myBooking" element={<MyBooking/>} />
-        <Route path="/nftMint" element={<NFTMint/>} />
-        <Route path="/claimNft" element={<ClaimNft/>} />
       </Routes>
       <ToastContainer/>
     </Router>

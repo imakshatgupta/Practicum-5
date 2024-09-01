@@ -11,7 +11,6 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import dayjs from "dayjs";
 import axios from "axios";
-import makeCryptoPayment from "../utils/constants";
 import { toast } from "react-toastify";
 
 export default function BookingModal({

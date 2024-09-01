@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import axios from "axios";
 export default function Signup() {
   const [formData, setFormData] = useState({
     userName: "",
@@ -22,23 +23,30 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { userName, fullName, email, password } = formData;
-    const res = await fetch("http://localhost:8000/users/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ userName, fullName, email, password }),
-    });
-    const data = await res.json();
-    if (data.error) {
-      console.log(data.error);
-      toast.error(data.error)
-      navigate('/signup')
-    } else {
-      console.log(data);
-      toast.success("Signup Successfully");
+  
+    try {
+      const res = await axios.post("http://localhost:8000/users/register", {
+        userName,
+        fullName,
+        email,
+        password,
+      });
+  
+      const data = res.data;
+  
+      if (data.error) {
+        console.log(data.error);
+        toast.error(data.error);
+        navigate('/signup');
+      } else {
+        console.log(data);
+        toast.success("Signup Successfully");
         navigate("/login");
-
+      }
+    } catch (error) {
+      console.error("Error during signup:", error);
+      toast.error("Signup failed. Please try again.");
+      navigate('/signup');
     }
   };
 

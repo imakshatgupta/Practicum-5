@@ -9,12 +9,8 @@ const NFT = require("./models/nftModel.js");
 
 const app = express();
 app.use(express.json());
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    credentials: true,
-  })
-);
+app.use(cors()); // Allow all origins by default
+
 
 const upload = multer({
   limits: {

@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 
@@ -23,21 +24,26 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { userName, password } = formData;
-    const res = await fetch("http://localhost:8000/users/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ userName, password }),
-    });
-    const data = await res.json();
-    if (data.error) {
-      console.log(data.error);
-    } else {
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.user));
-      toast.success("Login Successfully")
-      navigate("/");
+  
+    try {
+      const res = await axios.post("http://localhost:8000/users/login", {
+        userName,
+        password,
+      });
+  
+      const data = res.data;
+  
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        toast.success("Login Successfully");
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      toast.error("Login failed. Please try again.");
     }
   };
 

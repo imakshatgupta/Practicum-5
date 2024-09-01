@@ -3,7 +3,6 @@ import { Scanner } from "@yudiel/react-qr-scanner";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Button, Modal } from "@mui/material";
-import makeCryptoPayment from "../utils/constants";
 
 const SlotExit = () => {
   const history = useNavigate();
