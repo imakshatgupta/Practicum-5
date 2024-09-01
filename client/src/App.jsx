@@ -29,17 +29,12 @@ const App = () => (
         <Route path="/" element={<Parking />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/lend" element={<RentForm />} />
-        <Route path="/rent" element={<CarRent />} />
-        <Route path="/myCar" element={<MyCar />} />
-        <Route path='/rental' element={<RentalCard />} />
         <Route path ='/parking' element={<Parking />} />
         <Route path='/park' element={<ParkArea/>}/>
         <Route path ='/slot' element={<Slot />} />
         <Route path ='/slotentry' element={<SlotEntry />} />
         <Route path ='/slotexit' element={<SlotExit />} />
         <Route path="/admin" element={<Admin />} />
-        <Route path="/myBooking" element={<MyBooking/>} />
       </Routes>
       <ToastContainer/>
     </Router>

@@ -1,21 +1,29 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import Navbar from '../Components/Navbar'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import Navbar from '../Components/Navbar';
 
 const Admin = () => {
   return (
-    <div>
-    <Navbar/>
-    <div className='flex  items-center justify-around h-screen'>
-      <Link to='/slotentry' className='bg-blue-500 hover:bg-blue-700 text-white font-bold text-[30px] py-2 px-4 rounded mb-4'>
-        SlotEntry
-      </Link>
-      <Link to='/slotexit' className='bg-green-500 hover:bg-green-700 text-white text-[30px] font-bold py-2 px-4 rounded mb-4'>
-        SlotExit
-      </Link>
+    <div className="min-h-screen flex flex-col">
+      <Navbar />
+      <div className="flex-grow flex items-center justify-center bg-gradient-to-r from-blue-100 to-blue-300">
+        <div className="flex flex-col md:flex-row space-y-6 md:space-y-0 md:space-x-10 p-8">
+          <Link
+            to="/slotentry"
+            className="bg-white shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300 ease-in-out text-blue-700 font-bold text-2xl py-6 px-8 rounded-lg text-center"
+          >
+            Slot Entry
+          </Link>
+          <Link
+            to="/slotexit"
+            className="bg-white shadow-lg hover:shadow-xl transform hover:scale-105 transition duration-300 ease-in-out text-green-700 font-bold text-2xl py-6 px-8 rounded-lg text-center"
+          >
+            Slot Exit
+          </Link>
+        </div>
+      </div>
     </div>
-    </div>
-  )
-}
+  );
+};
 
-export default Admin
+export default Admin;

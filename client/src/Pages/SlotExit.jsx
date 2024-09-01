@@ -1,21 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Scanner } from "@yudiel/react-qr-scanner";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Button, Modal } from "@mui/material";
 
 const SlotExit = () => {
-  const history = useNavigate();
-
-  const [payableAmount, setPayableAmount] = React.useState(0);
+  const navigate = useNavigate();
+  const [payableAmount, setPayableAmount] = useState(0);
   const [showModal, setShowModal] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const loadRazorpayScript = async () => {
       const script = document.createElement("script");
       script.src = "https://checkout.razorpay.com/v1/checkout.js";
       script.async = true;
-      script.onload = () => {};
       document.body.appendChild(script);
     };
 
@@ -38,7 +36,7 @@ const SlotExit = () => {
             razorpay_signature: response.razorpay_signature,
           };
           await axios.post(verifyUrl, verifyData);
-          history("/admin");
+          navigate("/admin");
         } catch (err) {
           console.log(err);
         }
@@ -59,9 +57,7 @@ const SlotExit = () => {
           rentPrice: data,
         }
       );
-      console.log(response.data);
       initPayment(response.data);
-      
     } catch (error) {
       console.log(error);
     }
@@ -69,7 +65,6 @@ const SlotExit = () => {
 
   const qrData = async (text) => {
     const slotBooking = JSON.parse(text);
-    console.log(slotBooking.slotId);
     const slotExit = await fetch("http://localhost:8000/parking/slotExit", {
       method: "POST",
       headers: {
@@ -80,12 +75,11 @@ const SlotExit = () => {
       }),
     });
     const data = await slotExit.json();
-    console.log(data.payableAmount);
     setPayableAmount(data.payableAmount);
     setShowModal(true);
   };
 
-  const handlePayWithRazorpay = async() => {
+  const handlePayWithRazorpay = async () => {
     setShowModal(false);
     await handleProceed(payableAmount);
   };
@@ -95,40 +89,43 @@ const SlotExit = () => {
     const cryptoAmount = payableAmount * 0.011;
     const cryptoAddress = "0xC3385be7163DA9ee64dfE1847De5dC9c8Aa88eC0";
     await makeCryptoPayment(cryptoAddress, cryptoAmount);
-    history("/admin");
+    navigate("/admin");
   };
 
   return (
-    <div className="h-[400px] w-[400px] m-auto mt-[200px]">
-      <Scanner
-        components={{
-          audio: false,
-        }}
-        options={{
-          delayBetweenScanSuccess: 10000,
-        }}
-        onResult={(text) => qrData(text)}
-        onError={(error) => console.log(error?.message)}
-      />
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <div className="w-full max-w-md p-6 bg-white shadow-lg rounded-lg">
+        <Scanner
+          components={{
+            audio: false,
+          }}
+          options={{
+            delayBetweenScanSuccess: 10000,
+          }}
+          onResult={(text) => qrData(text)}
+          onError={(error) => console.log(error?.message)}
+        />
+      </div>
       <Modal open={showModal} onClose={() => setShowModal(false)}>
-        <div className="modal-container bg-white fixed z-[1300]  flex items-center justify-center">
-          <div className="modal-content flex flex-col justify-center items-center gap-5 p-6 ">
-            <h2>
-              Payable Amount: {payableAmount} Rs. ({payableAmount * 0.011}{" "}
-              MATIC)
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+            <h2 className="text-2xl font-semibold mb-4 text-center">
+              Payable Amount: {payableAmount} Rs. ({(payableAmount * 0.011).toFixed(4)} MATIC)
             </h2>
-            <Button
-              onClick={handlePayWithRazorpay}
-              style={{ backgroundColor: "green", color: "white" }}
-            >
-              Pay with Razorpay
-            </Button>
-            <Button
-              onClick={handlePayWithWallet}
-              style={{ backgroundColor: "red", color: "white" }}
-            >
-              Pay with Wallet
-            </Button>
+            <div className="flex justify-between mt-4">
+              <Button
+                onClick={handlePayWithRazorpay}
+                className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md"
+              >
+                Pay with Razorpay
+              </Button>
+              <Button
+                onClick={handlePayWithWallet}
+                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md"
+              >
+                Pay with Wallet
+              </Button>
+            </div>
           </div>
         </div>
       </Modal>

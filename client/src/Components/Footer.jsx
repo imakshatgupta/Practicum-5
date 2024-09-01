@@ -2,17 +2,15 @@ import logo from "../assets/logo.png";
 import instagram from "../assets/instagram.svg";
 import facebook from "../assets/facebook.svg";
 import twitter from "../assets/twitter.svg";
-import linkedin from "../assets/linkedin.svg"; // Added missing import
-import { Link } from "react-router-dom"; // Added missing import
+import linkedin from "../assets/linkedin.svg"; 
+import { Link } from "react-router-dom"; 
 
 const customStyles = {
-  // Renamed from styles to avoid conflict
   boxWidth: "xl:max-w-[1280px] w-full",
   heading2:
     "font-poppins font-semibold xs:text-[48px] text-[40px] text-black xs:leading-[76.8px] leading-[66.8px] w-full",
-  paragraph:
-    "text-gray-500",
-  flexCenter: "flex  justify-center items-center",
+  paragraph: "text-gray-500",
+  flexCenter: "flex justify-center items-center",
   flexStart: "flex justify-center items-start",
   paddingX: "sm:px-16 px-6",
   paddingY: "pb-6",
@@ -40,7 +38,7 @@ const footerLinks = [
       {
         name: "How it Works",
         link: "",
-      }
+      },
     ],
   },
   {
@@ -54,7 +52,6 @@ const footerLinks = [
         name: "Partners",
         link: "",
       },
-
     ],
   },
   {
@@ -71,6 +68,7 @@ const footerLinks = [
     ],
   },
 ];
+
 const socialMedia = [
   {
     id: "social-media-1",
@@ -96,41 +94,46 @@ const socialMedia = [
 
 const Footer = () => (
   <section
-    className={`${customStyles.flexCenter} ${customStyles.paddingY} flex-col bg-white px-6`}
+    className={`${customStyles.flexCenter} ${customStyles.paddingY} flex-col bg-gray-100`}
   >
-    <div className={`${customStyles.flexStart} md:flex-row flex-col  w-full`}>
+    <div className={`${customStyles.flexStart} md:flex-row flex-col w-full`}>
       <div className="flex-[1] flex flex-col justify-start mr-10">
-    
-        <h1 className="text-[42px] font-bold text-black">
-          <img  src={logo} alt="" className="w-[400px]" />
-        </h1>
-        <p
-          className={`${customStyles.paragraph} mt-4 pl-4 text-black`}
-        >
+        <img src={logo} alt="Logo" className="w-[200px] object-contain" />
+        <p className={`${customStyles.paragraph} mt-4 text-black`}>
           A new way to make the payments easy, reliable and secure.
         </p>
+        <div className="flex mt-6">
+          {socialMedia.map((social) => (
+            <a key={social.id} href={social.link} target="_blank" rel="noreferrer" className="mr-6">
+              <img
+                src={social.icon}
+                alt={social.id}
+                className="w-6 h-6 object-contain hover:opacity-75"
+              />
+            </a>
+          ))}
+        </div>
       </div>
 
-      <div className="flex-[1] w-full flex flex-row justify-around flex-wrap md:mt-0 mt-10">
+      <div className="flex-[1.5] w-full flex flex-row justify-between flex-wrap md:mt-0 mt-10">
         {footerLinks.map((footerlink) => (
           <div
             key={footerlink.title}
-            className={`flex flex-col ss:my-0 my-4 min-w-[150px]`}
+            className="flex flex-col ss:my-0 my-4 min-w-[150px]"
           >
-            <h4 className="font-poppins font-medium text-[18px] leading-[27px] text-black">
+            <h4 className="font-poppins font-medium text-[18px] leading-[27px] text-gray-800">
               {footerlink.title}
             </h4>
-            <ul className="list-none flex flex-col mt-4 text-black">
+            <ul className="list-none flex flex-col mt-4">
               {footerlink.links.map((link, index) => (
-                <Link
-                  key={link.name}
-                  className={`font-poppins font-normal text-[16px] leading-[24px] text-dimWhite hover:text-secondary cursor-pointer ${
-                    index !== footerlink.links.length - 1 ? "mb-4" : "mb-0"
-                  }`}
-                  to={link.link}
-                >
-                  {link.name}
-                </Link>
+                <li key={link.name} className="mb-4">
+                  <Link
+                    to={link.link}
+                    className="font-poppins font-normal text-[16px] leading-[24px] text-gray-600 hover:text-black transition-colors"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
               ))}
             </ul>
           </div>
