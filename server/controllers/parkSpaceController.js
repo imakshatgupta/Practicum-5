@@ -28,17 +28,30 @@ const slotEntry = async (req, res) => {
   try {
     const id = req.body.slotId;
 
-    const slot = await Slot.findOne({slotNo:id});
-    if (slot) {
-      slot.occupied = true;
-      slot.inTime = Date.now();
-      await slot.save(); // Need to await the save operation
-      return res.status(200).json({
-        Success: "Slot Entry Successful!",
+    let slot = await Slot.findOne({ slotNo: id });
+    
+    if (!slot) {
+      slot = new Slot({
+        slotNo: id,
+        occupied: true,
+        inTime: Date.now(),
+        carOwner: req.body.carOwner, 
+      });
+
+      await slot.save();
+      
+      return res.status(201).json({
+        Success: "Slot created and booked successfully!",
       });
     } else {
-      return res.status(400).json({
-        Error: "Slot not found",
+      slot.occupied = true;
+      slot.inTime = Date.now();
+      slot.carOwner = req.body.carOwner; 
+
+      await slot.save(); 
+
+      return res.status(200).json({
+        Success: "Slot Entry Successful!",
       });
     }
   } catch (error) {
@@ -48,6 +61,9 @@ const slotEntry = async (req, res) => {
     });
   }
 };
+
+module.exports = slotEntry;
+
 
 
 const slotExit = async (req, res) => {

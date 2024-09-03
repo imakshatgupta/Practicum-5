@@ -22,7 +22,7 @@ const SlotExit = () => {
 
   const initPayment = (data) => {
     const options = {
-      key: "rzp_test_rrpFDSyVYUuEE4",
+      key: "rzp_test_XDJyRLoZSTmLWa",
       amount: data.amount,
       currency: data.currency,
       order_id: data.orderDetails.razorpayOrderId,
@@ -110,21 +110,15 @@ const SlotExit = () => {
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
             <h2 className="text-2xl font-semibold mb-4 text-center">
-              Payable Amount: {payableAmount} Rs. ({(payableAmount * 0.011).toFixed(4)} MATIC)
+              Payable Amount: Rs. {payableAmount}
             </h2>
-            <div className="flex justify-between mt-4">
-              <Button
+            <div className="flex justify-center mt-4 ">
+              <button
                 onClick={handlePayWithRazorpay}
                 className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md"
               >
-                Pay with Razorpay
-              </Button>
-              <Button
-                onClick={handlePayWithWallet}
-                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md"
-              >
-                Pay with Wallet
-              </Button>
+                Pay Now
+              </button>
             </div>
           </div>
         </div>

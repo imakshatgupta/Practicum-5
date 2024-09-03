@@ -2,6 +2,7 @@ import React from "react";
 import { Scanner } from "@yudiel/react-qr-scanner";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const SlotEntry = () => {
   const navigate = useNavigate();
@@ -27,18 +28,15 @@ const SlotEntry = () => {
   const qrData = async (text) => {
     try {
       const slotBooking = JSON.parse(text);
-      const slotEntry = await fetch("http://localhost:8000/parking/slotEntry", {
-        method: "POST",
+      const slotEntry = await axios.post("http://localhost:8000/parking/slotEntry", {
+        slotId: slotBooking.slotId,
+        carOwner: user._id,
+      }, {
         headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          slotId: slotBooking.slotId,
-          carOwner: user._id,
-        }),
+          "Content-Type": "application/json"
+        }
       });
-      const data = await slotEntry.json();
-      console.log(data);
+      console.log(slotEntry.data);
       await redirect();
     } catch (error) {
       console.error("Error processing QR data:", error);
