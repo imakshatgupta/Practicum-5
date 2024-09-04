@@ -31,7 +31,7 @@ const Parking = () => {
       >
         <div className="flex flex-col flex-1 text-center md:text-left">
           <div className="mb-10">
-            <h1 className="font-poppins font-bold text-5xl md:text-7xl text-gray-800 leading-snug">
+            <h1 className="font-poppins font-bold text-6xl  text-gray-800 leading-snug">
               Discover the {" "}
               <br className="sm:hidden" />
               <span className="text-gradient bg-gradient-to-r from-purple-400 to-blue-600 bg-clip-text text-transparent">
