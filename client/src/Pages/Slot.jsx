@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import QRCode from "qrcode.react";
+import axios from "axios";
 import Navbar from "../Components/Navbar";
 import { toast } from "react-toastify";
 import slotsData from "./data.json";
@@ -17,12 +18,13 @@ const Slot = () => {
     getSlot();
   }, [incomingSlot]);
 
-  const getSlot = () => {
+  const getSlot = async () => {
     try {
-      // Assuming the local data structure matches what you would get from the server
-      const data = slotsData.slots;
+      const response = await axios.get("http://localhost:8000/space_count");
+      console.log(response.data.available_slots);
+      const freeSlots = response.data.available_slots.length;
+      const data = response.data.available_slots;
       const currentPrice = slotsData.price;
-      const freeSlots = slotsData.freeslots;
 
       console.log(data);
       setFreeSlot(freeSlots);
@@ -36,11 +38,11 @@ const Slot = () => {
   useEffect(() => {
     if (incomingSlot && incomingSlot.length > 0) {
       const updatedSlots = slotsData.slots.map((slot) => {
-        const matchingSlot = incomingSlot.find((s) => s.slotNo === slot.slotNo);
+        const matchingSlot = incomingSlot.find((s) => s === slot.slotNo);
         if (matchingSlot) {
-          return { ...slot, isFree: matchingSlot.isFree };
+          return { ...slot, isFree: true };
         }
-        return slot;
+        return { ...slot, isFree: false };
       });
       setSlots(updatedSlots);
     }

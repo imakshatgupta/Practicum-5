@@ -18,6 +18,16 @@ const upload = multer({
   },
 });
 
+app.get('/space_count', async (req, res) => {
+    try {
+      const externalApiResponse = await axios.get('http://127.0.0.1:5000/space_count');
+      res.json(externalApiResponse.data);
+    } catch (error) {
+      console.error('Error fetching from external API:', error);
+      res.status(500).json({ error: 'Failed to fetch data from external API' });
+    }
+  });
+
 const starton = axios.create({
   baseURL: "https://api.starton.io/v3",
   headers: {

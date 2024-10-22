@@ -25,7 +25,7 @@ export default function Navbar() {
       <div>
         {isLoggedIn ? (
           <>
-            <Link to="/myCar" className="text-lg font-bold">
+            <Link  className="text-lg font-bold">
               <span className="cursor-pointer">
                 Hi,{" "}
                 <span className="text-blue-500">
